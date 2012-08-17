@@ -39,6 +39,11 @@ var reservesStore;
 
 //The following needs to be configured to your own values:
 var HOSTNAME = "http://laurentian.concat.ca";
+// TPAC variables
+var USE_TPAC = true;
+var SEARCH_ORG = "105";
+
+// JSPAC variables
 var SKIN = "lul";
 var SEARCH_ORG = "osul";
 
@@ -102,7 +107,11 @@ var layout =  [{cells:[[
 
 dojo.addOnLoad(function(){
   dojo.connect(grid, 'onRowClick', function(e){
-    window.open(HOSTNAME + '/opac/extras/feed/bookbag/opac/' + grid.store.getValue(grid.getItem(e.rowIndex),'bookbag_id') +'?skin='+ SKIN +'&searchOrg=' + SEARCH_ORG);
+    if (USE_TPAC == true) {
+        window.open(HOSTNAME + 'eg/opac/results?bookbag=' + grid.store.getValue(grid.getItem(e.rowIndex),'bookbag_id') +';locg=' + SEARCH_ORG);
+    } else {
+        window.open(HOSTNAME + '/opac/extras/feed/bookbag/opac/' + grid.store.getValue(grid.getItem(e.rowIndex),'bookbag_id') +'?skin='+ SKIN +'&searchOrg=' + SEARCH_ORG);
+    }
   });
   grid.setSortIndex(0, true);
 });
