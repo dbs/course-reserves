@@ -4,7 +4,7 @@
   <head>
   <title><?php print $SETTINGS['title']; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css">
     <link rel="stylesheet" type="text/css" href="<?php print $SETTINGS['baseaddress']; ?>/style.css">
     <link rel="stylesheet" type="text/css" href="<?php print $SETTINGS['baseaddress']; ?>/js/dojox/grid/resources/Grid.css">
     <script type="text/javascript" src="<?php print $SETTINGS['baseaddress']; ?>/js/dojo/dojo.js"

@@ -38,12 +38,14 @@
 /*
  * baseaddress: The address the reserve list currently resides
  *              * Do not include trailing slash
+ *              * Do not include "http" or "https"; lets you set up
+ *                a non-SSL site then cut over to SSL without a config change
  *
- * example: http://biblio.laurentian.ca/reserves
+ * example: //biblio.laurentian.ca/reserves
  *
  */
 
-$SETTINGS['baseaddress'] = 'http://localhost';
+$SETTINGS['baseaddress'] = '//localhost';
 
 /*
  * title: The title of the site. Appears at top of page, as well as as in title 
