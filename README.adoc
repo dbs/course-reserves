@@ -1,0 +1,4 @@
+= Course Reserves
+Victoria Lacroix
+
+A little system to allow for reserves on courses. Professors can ask that required material for a course be reserved, allowing students easier access to said material.
