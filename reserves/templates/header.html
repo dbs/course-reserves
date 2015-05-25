@@ -3,22 +3,16 @@
   <head>
   <title>{{ _(opt['PAGE_TITLE']) }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-    <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/dojox/grid/resources/Grid.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/dojo/dojo.js') }}"
-      djConfig="isDebug: false, debugAtAllCosts: false, parseOnLoad: true"></script>
-    <script type="text/javascript">
-      // Must create a base url config setting in the JS
-      var base_url = "{{ url_for('static', filename = 'js/') }}"
-    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='list.js') }}"></script>
   </head>
-  <body class="tundra">
-    <div id="container">
+  <body id="container">
+    <div id="center">
       <div id="header">
         <img src="{{ url_for('static', filename = 'laurentian.jpg') }}">
+        <h1><a href="{{ url_for('view_reserves') }}">{{ _('Reserves') }}</a></h1>
         <div class="options">
-          <a href="{{ opt['APP_ROOT'] }}">{{ _(opt['PAGE_TITLE']) }}</a><br/>
-          <a href="{{ opt['APP_ROOT'] + 'lang/' + _('fr/') }}">{{ _('Francais') }}</a>
+          <a href="{{ url_for('view_reserves') }}">{{ _(opt['PAGE_TITLE']) }}</a><br/>
+          <a href="{{ url_for('lang_switch', lang=_('fr')) }}">{{ _('Francais') }}</a>
         </div>
       </div>
