@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+
+<div class="instructions">
+  <p>{{ _("Professors may place library material which is in high demand on
+  reserve. By placing an item on reserve, a professor ensures that the
+  maximum number of students will have access to the material.") }}</p>
+  <p>{{ _("Reserve material is kept at the Access Services Desk and is available on a
+  limited-term loan period from two hours to three days.") }}</p>
+  <p>{{ _("To access a list of reserves for a given course, please select the
+  course below. You can sort the list either by course or instructor by
+  clicking on the corresponding heading in the list.") }}</p>
+  <p>{{ _("When you click on a course, a list of the reserves for that course will be
+  brought up in the catalogue. To obtain a reserve number for a specific
+  book, click on the book title, then refer to the call number under the
+  copy summary for that book as outlined in red in the images below. The
+  call number may just contain the reserve number, or the reserve number
+  followed by the book's actual call number. Ask for a reserve at the
+  Access Services Desk using this reserve number.") }}</p>
+</div>
+
+<table>
+  <tr>
+    <th>{{ _('Course Code') }}</th>
+    <th>{{ _('Instructor') }}</th>
+    <th>{{ _('Bookbag ID') }}</th>
+  </tr>
+{% for reserve in data %}
+  <tr>
+    <td>{{ reserve[1] }}</td>
+    <td>{{ reserve[2] }}</td>
+    <td><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105">{{ reserve[3] }}</a></td>
+  </tr>
+{% endfor %}
+</table>
+
+{% include 'footer.html' %}
