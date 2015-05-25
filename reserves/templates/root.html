@@ -18,19 +18,34 @@
   Access Services Desk using this reserve number.") }}</p>
 </div>
 
-<table>
-  <tr>
-    <th>{{ _('Course Code') }}</th>
-    <th>{{ _('Instructor') }}</th>
-    <th>{{ _('Bookbag ID') }}</th>
-  </tr>
-{% for reserve in data %}
-  <tr>
-    <td>{{ reserve[1] }}</td>
-    <td>{{ reserve[2] }}</td>
-    <td><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105">{{ reserve[3] }}</a></td>
-  </tr>
-{% endfor %}
-</table>
+<div id="reserves">
+  <input class="search" placeholder="{{ _('Filter...') }}" />
+  <table>
+    <tr>
+      <th><button type="button" class="sort" data-sort="code">{{ _('Course Code') }}</button></th>
+      <th><button type="button" class="sort" data-sort="instructor">{{ _('Instructor') }}</button></th>
+      <th><button type="button" class="sort" data-sort="bookbag">{{ _('Bookbag ID') }}</button></th>
+    </tr>
+    <tbody class="list">
+      {% for reserve in data %}
+      <tr onclick="document.location = 'https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105'">
+        <td class="code">{{ reserve[1] }}</td>
+        <td class="instructor">{{ reserve[2] }}</td>
+        <td class="bookbag"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105">{{ reserve[3] }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+    var options = {
+        valueNames: [ 'code', 'instructor', 'bookbag' ]
+    };
+
+    var reserveList = new List('reserves', options);
+</script>
+
+</div>
 
 {% include 'footer.html' %}
