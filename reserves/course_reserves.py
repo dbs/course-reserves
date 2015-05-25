@@ -58,7 +58,7 @@ def lang_switch(lang):
         if opt['VERBOSE']:
             print('Language switched to: ' + lang)
         session['LANG'] = lang
-        return render_template('root.html', opt=opt, data=database.get_reserves()), 200
+    return render_template('root.html', opt=opt, data=database.get_reserves()), 200
 
 @app.route(opt['APP_ROOT']+'admin/', methods=['GET', 'POST'])
 def admin():
