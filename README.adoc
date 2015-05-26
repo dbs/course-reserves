@@ -1,4 +1,23 @@
 = Course Reserves
+Kevin Beswick
 Victoria Lacroix
 
 A little system to allow for reserves on courses. Professors can ask that required material for a course be reserved, allowing students easier access to said material.
+
+== Requirements
+
+* +Python 2.6+
+* +Python-LDAP+
+* +Flask+
+** +Flask-Login+
+** +Flask-Babel+
+* +PostgreSQL+
+** +PsychoPG2+
+
+== Installation
+
+As long as the requirements are met, this *should* work with very little effort. You'll need your usual WSGI stuff to get it working on a web server. This application was developed on an nginx server, so that's where one will get the best results.
+
++schema.sql+ has all of the SQL code to generate the tables that are needed. +config.ini+ stores the username and database used, so one need simply change those to whatever is desired.
+
+Speaking of +config.ini+, a secret key must be set in there. This is a key used to sign session variables/cookies. Try not to make it public.
