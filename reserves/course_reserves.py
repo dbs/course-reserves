@@ -12,14 +12,14 @@ import sys
 import ldap
 import psycopg2
 import StringIO
-import database
 
 app = Flask(__name__)
 app.root_path = abspath(dirname(__file__))
 babel = Babel(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 c = ConfigFile('config.ini')
-opt = {}
 opt = c.getsection('Reserves')
 
 parser = OptionParser()
@@ -27,10 +27,17 @@ parser.add_option('-d', '--debug', dest='DEBUG', action='store_true',
             help='Provides debug output when unhandled exceptions occur.')
 parser.add_option('-v', '--verbose', dest='VERBOSE', action='store_true',
             help='Provides verbose output for what is being done.')
-cmd_opt, junk = parser.parse_args()
+parser.add_option('-s', '--student', dest='STUDENT', action='store_true',
+            help='Authenticates against the Student LDAP')
+cmd_opt, all_opt = parser.parse_args()
 
 opt['DEBUG']  = cmd_opt.DEBUG
 opt['VERBOSE'] = cmd_opt.VERBOSE
+opt['STUDENT'] = cmd_opt.STUDENT
+
+# We import these here because they depend on opt[], which needs to resolve.
+import database
+from user import User
 
 if opt['VERBOSE']:
     print('Using options:')
@@ -46,9 +53,48 @@ def select_locale():
     except Exception, ex:
         return opt['LANG']
 
+@login_manager.user_loader
+def load_user(id):
+    return User.get_by_id(id)
+
+@app.before_request
+def pre_request():
+    try:
+        user = User.get_by_id(session['uid'])
+        if not user:
+            logout_user()
+        else:
+            current_user = user
+    except Exception, ex:
+        if opt['VERBOSE']:
+            print('Exception occurred on user:')
+            print(ex)
+
+@app.errorhandler(401)
+def forbidden_error(err):
+    if opt['VERBOSE']:
+        print('401 error:')
+        print(err)
+    return redirect(url_for('login_form')), 401
+
+@app.errorhandler(404)
+def not_found(err):
+    if opt['VERBOSE']:
+        print('404 error:')
+        print(err)
+    return render_template('404.html', opt=opt), 404
+
+@app.errorhandler(500)
+def server_problem(err):
+    if opt['VERBOSE']:
+        print('500 error:')
+        print(err)
+    return render_template('500.html', opt=opt), 500
+
 @app.route(opt['APP_ROOT'], methods=['GET', 'POST'])
 @app.route(opt['APP_ROOT']+'view/', methods=['GET', 'POST'])
 def view_reserves():
+    logout_user()
     return render_template('root.html',
             data=database.get_reserves(), opt=opt), 200
 
@@ -58,13 +104,32 @@ def lang_switch(lang):
         if opt['VERBOSE']:
             print('Language switched to: ' + lang)
         session['LANG'] = lang
-    return render_template('root.html', opt=opt, data=database.get_reserves()), 200
+    return redirect(url_for('view_reserves')), 200
+
+@app.route(opt['APP_ROOT']+'login/', methods=['GET', 'POST'])
+def login_form():
+    if not current_user.is_authenticated():
+        if request.method == 'POST':
+            try:
+                form = request.form
+                user = User.try_login(opt['LDAP_HOST'], form['username'], form['password'])
+                session['uid'] = user.get_id()
+                login_user(user)
+                return redirect(url_for('admin')), 200
+            except Exception, ex:
+                return render_template('login.html', opt=opt), 200
+        else:
+            return render_template('login_fail.html', opt=opt), 200
+    else:
+        return redirect(url_for('admin')), 200
 
 @app.route(opt['APP_ROOT']+'admin/', methods=['GET', 'POST'])
+@login_required
 def admin():
     return render_template('adminform.html', opt=opt), 200
 
 @app.route(opt['APP_ROOT']+'add/', methods=['POST'])
+@login_required
 def add_reserve():
     try:
         form = request.form
@@ -81,6 +146,7 @@ def add_reserve():
     return render_template('adminform.html', opt=opt, message=message), 200
 
 @app.route(opt['APP_ROOT']+'edit/', methods=['POST'])
+@login_required
 def edit_reserve():
     try:
         form = request.form
@@ -98,6 +164,7 @@ def edit_reserve():
     return render_template('admin', opt=opt, message=message), 200
 
 @app.route(opt['APP_ROOT']+'delete/', methods=['POST'])
+@login_required
 def delete_reserve():
     try:
         form = request.form
