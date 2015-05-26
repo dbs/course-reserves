@@ -4,7 +4,7 @@ import os
 
 def get_db():
     """
-    Get a database connection
+    Get a database connection.
 
     With a host attribute in the mix, you could connect to a remote
     database, but then you would have to set up .pgpass or add a
@@ -39,7 +39,7 @@ def get_reserves():
     return None
 
 def add_reserve(code, instructor, bookbag):
-    """Adds a reserve."""
+    "Adds a reserve to the database."
     dbh = get_db()
     cur = dbh.cursor()
     try:
@@ -56,7 +56,7 @@ def add_reserve(code, instructor, bookbag):
 
 def edit_reserve(id, code, instructor, bookbag):
     """
-    Edits an existing reserve.
+    Edits an existing reserve with the given id.
     """
     dbh = get_db()
     cur = dbh.cursor()
@@ -73,7 +73,7 @@ def edit_reserve(id, code, instructor, bookbag):
 
 def delete_reserve(id):
     """
-    Deletes a reserve.
+    Deletes the reserve with the given id.
 
     Careful!
     """

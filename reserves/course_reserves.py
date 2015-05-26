@@ -35,13 +35,10 @@ opt['DEBUG']  = cmd_opt.DEBUG
 opt['VERBOSE'] = cmd_opt.VERBOSE
 opt['STUDENT'] = cmd_opt.STUDENT
 
-# We import these here because they depend on opt[], which needs to resolve.
+# We import these here because they depend on opt[], which needs to resolve first.
 import database
 from user import User
 
-if opt['VERBOSE']:
-    print('Using options:')
-    print(opt)
 
 @babel.localeselector
 def select_locale():
@@ -59,6 +56,7 @@ def load_user(id):
 
 @app.before_request
 def pre_request():
+    "Selects a user based on the session's UID"
     try:
         user = User.get_by_id(session['uid'])
         if not user:
@@ -72,6 +70,7 @@ def pre_request():
 
 @app.errorhandler(401)
 def forbidden_error(err):
+    "Gives the user a login page."
     if opt['VERBOSE']:
         print('401 error:')
         print(err)
@@ -79,6 +78,7 @@ def forbidden_error(err):
 
 @app.errorhandler(404)
 def not_found(err):
+    "Gives a 404 page."
     if opt['VERBOSE']:
         print('404 error:')
         print(err)
@@ -86,6 +86,7 @@ def not_found(err):
 
 @app.errorhandler(500)
 def server_problem(err):
+    "Lets the user know that an error ocurred."
     if opt['VERBOSE']:
         print('500 error:')
         print(err)
@@ -94,12 +95,14 @@ def server_problem(err):
 @app.route(opt['APP_ROOT'], methods=['GET', 'POST'])
 @app.route(opt['APP_ROOT']+'view/', methods=['GET', 'POST'])
 def view_reserves():
+    "Our root page - show the list of reserves to the user."
     logout_user()
     return render_template('root.html',
             data=database.get_reserves(), opt=opt), 200
 
 @app.route(opt['APP_ROOT']+'lang/<lang>/', methods=['GET', 'POST'])
 def lang_switch(lang):
+    "Switch languages in the session out of a list of supported ones."
     if lang in ['en', 'fr']:
         if opt['VERBOSE']:
             print('Language switched to: ' + lang)
@@ -108,6 +111,11 @@ def lang_switch(lang):
 
 @app.route(opt['APP_ROOT']+'login/', methods=['GET', 'POST'])
 def login_form():
+    """
+    Gives the user a nice login form
+    
+    Afterwards, an LDAP server is queried to see if the credentials are valid.
+    """
     if not current_user.is_authenticated():
         if request.method == 'POST':
             try:
@@ -126,11 +134,13 @@ def login_form():
 @app.route(opt['APP_ROOT']+'admin/', methods=['GET', 'POST'])
 @login_required
 def admin():
+    "Gives the administrator a page with forms to modify the database."
     return render_template('adminform.html', opt=opt), 200
 
 @app.route(opt['APP_ROOT']+'add/', methods=['POST'])
 @login_required
 def add_reserve():
+    "Parses the form to add a reserve."
     try:
         form = request.form
         code = form['course_code']
@@ -148,6 +158,7 @@ def add_reserve():
 @app.route(opt['APP_ROOT']+'edit/', methods=['POST'])
 @login_required
 def edit_reserve():
+    "Parses the form to edit a reserve."
     try:
         form = request.form
         id = form['reserve_id']
@@ -166,6 +177,7 @@ def edit_reserve():
 @app.route(opt['APP_ROOT']+'delete/', methods=['POST'])
 @login_required
 def delete_reserve():
+    "Parses the form to delete a reserve."
     try:
         form = request.form
         id = form['reserve_id']
@@ -178,7 +190,15 @@ def delete_reserve():
     message = 'Form successfully submitted.'
     return render_template('adminform.html', opt=opt, message=message), 200
     
-app.secret_key = opt['SECRET']
+if opt['SECRET']:
+    app.secret_key = opt['SECRET']
+else:
+    print('No secret key has been set. Aborting.')
+    exit()
+
+if opt['VERBOSE']:
+    print('Using options:')
+    print(opt)
 
 if __name__ == '__main__':
     app.run(debug=opt['DEBUG'], host=opt['HOST'], port=opt['PORT'])

@@ -5,7 +5,13 @@ import ldap
 import database
 
 class User():
+    """
+    A class necessary for Flask-Login to function. It holds methods
+    to log users in from LDAP and add them to a database of users.
+    """
+
     def __init__(self, username, session_id=None):
+        "Returns a User object for Flask-Login"
         if not session_id:
             self.id = os.urandom(24).encode('hex')
         else:
@@ -46,6 +52,7 @@ class User():
         return None
 
     def add_to_db(self):
+        "Adds a user to the database."
         dbh = database.get_db()
         cur = dbh.cursor()
         try:
@@ -58,13 +65,21 @@ class User():
         dbh.close()
 
     def is_authenticated(self):
+        """
+        Returns the authentication status of a user.
+        Because this user always requires a password, this is always true.
+        Needed by Flask-Login.
+        """
         return True
 
     def is_active(self):
+        "Like above - this is needed by Flask-Login."
         return True
 
     def is_anonymous(self):
+        "Needed by Flask-Login."
         return False
 
     def get_id(self):
+        "Returns the user's UID."
         return self.id
