@@ -1,6 +1,6 @@
-import psycopg2
-import random
 from course_reserves import opt
+import psycopg2
+import os
 
 def get_db():
     """
@@ -25,8 +25,8 @@ def get_reserves():
     cur = dbh.cursor()
     try:
         cur.execute("""
-            SELECT id, course_code, instructor,
-            bookbag_id from RESERVE
+            SELECT course_code, instructor,
+            bookbag_id FROM reserve
         """)
         result = cur.fetchall()
         dbh.close()
@@ -44,7 +44,7 @@ def add_reserve(code, instructor, bookbag):
     cur = dbh.cursor()
     try:
         cur.execute("""INSERT INTO reserve VALUES (%s, %s, %s, %s)""", 
-                    (random.SystemRandom().randint(-0xFFFFFF, 0xFFFFFF),
+                    (os.urandom(24).encode('hex'),
                     code, instructor, bookbag))
     except Exception, ex:
         if opt['VERBOSE']:
