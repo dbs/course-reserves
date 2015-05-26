@@ -22,14 +22,12 @@
     <tr>
       <th><button type="button" class="sort" data-sort="code">{{ _('Course Code') }}</button></th>
       <th><button type="button" class="sort" data-sort="instructor">{{ _('Instructor') }}</button></th>
-      <th><button type="button" class="sort" data-sort="bookbag">{{ _('Material ID') }}</button></th>
     </tr>
     <tbody class="list">
       {% for reserve in data %}
       <tr onclick="document.location = 'https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};locg=105'">
         <td class="code">{{ reserve[0] }}</td>
         <td class="instructor">{{ reserve[1] }}</td>
-        <td class="bookbag"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};locg=105">{{ reserve[2] }}</a></td>
       </tr>
       {% endfor %}
     </tbody>

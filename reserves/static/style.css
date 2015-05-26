@@ -80,11 +80,11 @@ button.sort {
     width: 100%;
     padding: 3px;
     font-weight: bold;
-    background-color: #DDD;
+    background-color: #BBB;
     border: 0px;
 }
 button.sort:hover {
-    background-color: #EEE;
+    background-color: #DDD;
 }
 button.sort.asc:before {
     content: "\25B2 ";
@@ -100,7 +100,7 @@ button.sort.desc:before {
     table-layout: fixed;
 }
 #reserves tr[onclick]:hover {
-    background-color: #EEE;
+    background-color: #DDD;
 }
 #reserves th {
     padding: 0px;

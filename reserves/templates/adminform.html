@@ -30,34 +30,32 @@
           <input type="reset" value="{{ _('Clear') }}"/>
         </form>
       </div>
-    </div>
-    <div>
-      <h2>{{ _('Edit / Delete Reserves') }}</h2>
-    </div>
-    <div title="{{ _('Edit / Delete Reserve') }}">
-      <form id="edit_reserve" action="{{ url_for('edit_reserve') }}" method="post">
-        <h3>{{ _('Edit Reserve') }}</h3>
-          <input type="hidden" value="" name="reserve_id"/>
-          <table>
-          <tr>
-            <td><label for="coursecode">{{ _('Course Code:') }}</label></td>
-            <td><input type="text" name="course_code" value=""/></td>
-          </tr>
-          <tr>
-            <td><label for="instructor">{{ _('Instructor') }}</label></td>
-            <td><input type="text" name="instructor" value=""/></td>
-          </tr>
-          <tr>
-            <td><label for="bookbagid">{{ _('Bookbag ID') }}</label></td>
-            <td><input type="text" name="bookbag_id" value=""/></td>
-          </tr>
-        </table>
-        <input type="submit" value="{{ _('Save') }}"/>
-        <input type="reset" value="{{ _('Cancel') }}">
-      </form>
-      <form name="delete_reserve" action="{{ url_for('delete_reserve') }}" method="post">
-        <h3>{{ _('Delete Reserve') }}</h3>
+      <div>
+        <h2>{{ _('Edit / Delete Reserves') }}</h2>
+        <form id="edit_reserve" action="{{ url_for('edit_reserve') }}" method="post">
+          <h3>{{ _('Edit Reserve') }}</h3>
+            <input type="hidden" value="" name="reserve_id"/>
+            <table>
+            <tr>
+              <td><label for="coursecode">{{ _('Course Code:') }}</label></td>
+              <td><input type="text" name="course_code" value=""/></td>
+            </tr>
+            <tr>
+              <td><label for="instructor">{{ _('Instructor:') }}</label></td>
+              <td><input type="text" name="instructor" value=""/></td>
+            </tr>
+            <tr>
+              <td><label for="bookbagid">{{ _('Bookbag ID:') }}</label></td>
+              <td><input type="text" name="bookbag_id" value=""/></td>
+            </tr>
+          </table>
+          <input type="submit" value="{{ _('Save') }}"/>
+          <input type="reset" value="{{ _('Cancel') }}">
+        </form>
+        <form name="delete_reserve" action="{{ url_for('delete_reserve') }}" method="post">
+          <h3>{{ _('Delete Reserve') }}</h3>
           <input type="hidden" name="reserve_id" value=""/><br/>
           <input type="submit" value="{{ _('Delete This Reserve') }}"/></br>
+        </form>
       </div>
 {% include 'footer.html' %}
