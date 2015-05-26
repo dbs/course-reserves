@@ -23,6 +23,7 @@ a:hover {
   color: #FC2;
   text-decoration: underline;
 }
+
 div {
   margin-bottom: 1em;
 }
@@ -49,7 +50,6 @@ div.center {
 }
 .options {
   border:           solid 2px #05A;
-  border-radius:    .5em;
   padding:          3px;
   font-size:        16px;
   position:   absolute;
@@ -58,6 +58,10 @@ div.center {
   float:      top-right;
 }
 
+.content > div{
+    border: 2px solid #05A;
+    padding: .25em;
+}
 .collapsed {
     display: none;
 }
@@ -65,20 +69,19 @@ div.center {
     display: block;
 }
 
-.content > div{
-    border: 2px solid #05A;
-    border-radius: .25em;
-    padding: .25em;
-}
 input.search{
+    width: 30%;
+    padding: 1px;
+    float: right;
     margin: 0px 0px 2px 0px;
+    border: 1px solid #111;
 }
 button.sort {
     width: 100%;
+    padding: 3px;
+    font-weight: bold;
     background-color: #DDD;
     border: 0px;
-    font-size: 14px;
-    font-weight: bold;
 }
 button.sort:hover {
     background-color: #EEE;
@@ -89,6 +92,7 @@ button.sort.asc:before {
 button.sort.desc:before {
     content: "\25BC ";
 }
+
 #reserves table {
     width: 100%;
     padding: 2px;
@@ -100,9 +104,10 @@ button.sort.desc:before {
 }
 #reserves th {
     padding: 0px;
-    border: 1px solid #444
+    border: 1px solid #444;
 }
 #reserves td {
+    width: 1%;
     padding: 4px;
     border: 1px solid #888;
 }
@@ -122,10 +127,3 @@ form > table td {
     width: auto;
     height: auto;
 }
-/*
-input[type="submit"] {
-  position: relative;
-  margin-top: 10px;
-  left: 180px;
-}
-*/

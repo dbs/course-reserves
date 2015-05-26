@@ -6,13 +6,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='list.js') }}"></script>
   </head>
-  <body id="container">
-    <div id="center">
-      <div id="header">
-        <img src="{{ url_for('static', filename = 'laurentian.jpg') }}">
-        <h1><a href="{{ url_for('view_reserves') }}">{{ _('Reserves') }}</a></h1>
-        <div class="options">
-          <a href="{{ url_for('view_reserves') }}">{{ _(opt['PAGE_TITLE']) }}</a><br/>
-          <a href="{{ url_for('lang_switch', lang=_('fr')) }}">{{ _('Francais') }}</a>
-        </div>
+  <body class="container">
+    <div class="header">
+      <img src="{{ url_for('static', filename = 'laurentian.jpg') }}">
+      <h1><a href="{{ url_for('view_reserves') }}">{{ _('Reserves') }}</a></h1>
+      <div class="options">
+        <a href="{{ url_for('lang_switch', lang=_('fr')) }}">{{ _('Francais') }}</a>
       </div>
+    </div>
+    <div class="content">

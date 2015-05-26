@@ -1,42 +1,35 @@
 {% include 'header.html' %}
-<div class="content">
 
 <div>
   <a href="#instructions">{{ _('Show Instructions') }}</a>
   <div id="instructions" class="collapsed">
     <a href="#">{{ _('Hide Instructions') }}</a>
-    <p>{{ _("Professors may place library material which is in high demand on
-    reserve. By placing an item on reserve, a professor ensures that the
-    maximum number of students will have access to the material.") }}</p>
-    <p>{{ _("Reserve material is kept at the Access Services Desk and is available on a
-    limited-term loan period from two hours to three days.") }}</p>
-    <p>{{ _("To access a list of reserves for a given course, please select the
-    course below. You can sort the list either by course or instructor by
-    clicking on the corresponding heading in the list.") }}</p>
-    <p>{{ _("When you click on a course, a list of the reserves for that course will be
-    brought up in the catalogue. To obtain a reserve number for a specific
-    book, click on the book title, then refer to the call number under the
-    copy summary for that book as outlined in red in the images below. The
-    call number may just contain the reserve number, or the reserve number
-    followed by the book's actual call number. Ask for a reserve at the
-    Access Services Desk using this reserve number.") }}</p>
+    <p>{{ _("Instructors may place library materials which are in high demand on reserve.
+             This ensures that the instructors' students will have access to necessary materials.
+             Reserved materials are available at the Reserve Desk and are loaned for a period of 2 hours to 3 days.") }}</p>
+    <p>{{ _("To access reserves for a given course, type its course code into the filter bar. 
+             To access reserves from a given instructor, type their name into the filter bar.") }}</p>
+    <p>{{ _("Once the course has been found, click its entry in the table to be brought to its bookbag.
+             This bookbag gives the Call Number needed to borrow it.") }}</p>
+    <p>{{ _("Afterwards, simply go to the Reserve Desk at the Library and borrow the material using its Call Number.") }}</p>
   </div>
 </div>
 
 <div id="reserves">
+  <label>Reserves on file:</label>
   <input class="search" placeholder="{{ _('Filter...') }}" />
   <table>
     <tr>
       <th><button type="button" class="sort" data-sort="code">{{ _('Course Code') }}</button></th>
       <th><button type="button" class="sort" data-sort="instructor">{{ _('Instructor') }}</button></th>
-      <th><button type="button" class="sort" data-sort="bookbag">{{ _('Bookbag ID') }}</button></th>
+      <th><button type="button" class="sort" data-sort="bookbag">{{ _('Material ID') }}</button></th>
     </tr>
     <tbody class="list">
       {% for reserve in data %}
-      <tr onclick="document.location = 'https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105'">
-        <td class="code">{{ reserve[1] }}</td>
-        <td class="instructor">{{ reserve[2] }}</td>
-        <td class="bookbag"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[3] }};locg=105">{{ reserve[3] }}</a></td>
+      <tr onclick="document.location = 'https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};locg=105'">
+        <td class="code">{{ reserve[0] }}</td>
+        <td class="instructor">{{ reserve[1] }}</td>
+        <td class="bookbag"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};locg=105">{{ reserve[2] }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
@@ -50,7 +43,5 @@
 
     var reserveList = new List('reserves', options);
 </script>
-
-</div>
 
 {% include 'footer.html' %}
