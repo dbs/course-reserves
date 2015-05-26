@@ -1,0 +1,10 @@
+<!Doctype HTML>
+<html>
+    <head>
+        <title>{{ opt['PAGE_TITLE'] }}</title>
+    </head>
+    <body onload="location.replace('{{ url }}')">
+        <h1>{{ _('Redirecting...') }}</h1>
+        <a href="{{ url }}">{{ _('Not working? Click here.') }}</a>
+    </body>
+</html>

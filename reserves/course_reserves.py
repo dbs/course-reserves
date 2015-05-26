@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, abort, request, redirect, url_for, \
+from flask import Flask, abort, request, url_for, \
                     render_template, make_response, g, session
 from flask_login import LoginManager, login_required, current_user, \
                     login_user, logout_user
@@ -39,6 +39,9 @@ opt['STUDENT'] = cmd_opt.STUDENT
 import database
 from user import User
 
+def redirect(url):
+    "Redirects the user using an html file."
+    return render_template('redirect.html', opt=opt, url=url)
 
 @babel.localeselector
 def select_locale():
@@ -125,9 +128,12 @@ def login_form():
                 login_user(user)
                 return redirect(url_for('admin')), 200
             except Exception, ex:
-                return render_template('login.html', opt=opt), 200
+                if opt['VERBOSE']:
+                    print('Login problem ocurred:')
+                    print(ex)
+                return render_template('login_fail.html', opt=opt), 200
         else:
-            return render_template('login_fail.html', opt=opt), 200
+            return render_template('login.html', opt=opt), 200
     else:
         return redirect(url_for('admin')), 200
 
