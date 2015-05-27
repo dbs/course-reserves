@@ -30,11 +30,45 @@
           <input type="reset" value="{{ _('Clear') }}"/>
         </form>
       </div>
+
+      <div id="reserves">
+        <label>{{ _('Reserves on file:') }}</label>
+        <input class="search" placeholder="{{ _('Filter...') }}" />
+        <table>
+          <tr>
+            <th><button type="button" class="sort" data-sort="code">
+              {{ _('Course Code') }}
+            </button></th>
+            <th><button type="button" class="sort" data-sort="instructor">
+              {{ _('Instructor') }}
+            </button></th>
+          </tr>
+          <tbody class="list">
+            {% for reserve in data %}
+            <tr onclick="
+                document.getElementsByName('reserve_id')[0].value = '{{ reserve[3] }}';
+                document.getElementsByName('reserve_id')[1].value = '{{ reserve[3] }}';
+            ">
+              <td class="code">{{ reserve[0] }}</td>
+              <td class="instructor">{{ reserve[1] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <script type="text/javascript">
+          var options = {
+              valueNames: [ 'id', 'code', 'instructor' ]
+          };
+      
+          var reserveList = new List('reserves', options);
+      </script>
+
       <div>
         <h2>{{ _('Edit / Delete Reserves') }}</h2>
         <form id="edit_reserve" action="{{ url_for('edit_reserve') }}" method="post">
           <h3>{{ _('Edit Reserve') }}</h3>
-            <input type="hidden" value="" name="reserve_id"/>
+          <input type="hidden" value="" name="reserve_id"/>
             <table>
             <tr>
               <td><label for="coursecode">{{ _('Course Code:') }}</label></td>

@@ -26,7 +26,7 @@ def get_reserves():
     try:
         cur.execute("""
             SELECT course_code, instructor,
-            bookbag_id FROM reserve
+            bookbag_id, id FROM reserve
         """)
         result = cur.fetchall()
         dbh.close()
@@ -61,8 +61,8 @@ def edit_reserve(id, code, instructor, bookbag):
     dbh = get_db()
     cur = dbh.cursor()
     try:
-        cur.execute("""UPDATE TABLE reserve SET course_code, instructor,
-            bookbag_id = %s, %s, %s WHERE id = %s""", (code, instructor, bookbag, id))
+        cur.execute("""UPDATE reserve SET course_code = %s, instructor = %s,
+            bookbag_id = %s WHERE id = %s""", (code, instructor, bookbag, id))
     except Exception, ex:
         if opt['VERBOSE']:
             print('Couldn\'t edit a reserve: ')
@@ -79,8 +79,10 @@ def delete_reserve(id):
     """
     dbh = get_db()
     cur = dbh.cursor()
+    if opt['VERBOSE']:
+        print(id)
     try:
-        cur.execute("""DELETE FROM reserve where id = %s""" % id)
+        cur.execute("""DELETE FROM reserve where id = '%s'""" % id)
     except Exception, ex:
         if opt['VERBOSE']:
             print('Could not delete reserve:')

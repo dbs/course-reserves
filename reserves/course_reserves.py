@@ -35,7 +35,8 @@ opt['DEBUG']  = cmd_opt.DEBUG
 opt['VERBOSE'] = cmd_opt.VERBOSE
 opt['STUDENT'] = cmd_opt.STUDENT
 
-# We import these here because they depend on opt[], which needs to resolve first.
+# We import these here because they depend on opt[],
+# which needs to resolve first.
 import database
 from user import User
 
@@ -45,7 +46,10 @@ def redirect(url):
 
 @babel.localeselector
 def select_locale():
-    "Selects the locale. Babel uses this to determine which language to go with."
+    """
+    Selects the locale. Babel uses this to
+    determine which language to go with.
+    """
     try:
         if opt['VERBOSE']:
             print(session['LANG'])
@@ -123,7 +127,8 @@ def login_form():
         if request.method == 'POST':
             try:
                 form = request.form
-                user = User.try_login(opt['LDAP_HOST'], form['username'], form['password'])
+                user = User.try_login(opt['LDAP_HOST'],
+                    form['username'], form['password'])
                 session['uid'] = user.get_id()
                 login_user(user)
                 return redirect(url_for('admin')), 200
@@ -141,7 +146,8 @@ def login_form():
 @login_required
 def admin():
     "Gives the administrator a page with forms to modify the database."
-    return render_template('adminform.html', opt=opt), 200
+    return render_template('adminform.html',
+        opt=opt, data=database.get_reserves()), 200
 
 @app.route(opt['APP_ROOT']+'add/', methods=['POST'])
 @login_required
@@ -157,9 +163,9 @@ def add_reserve():
         print('Error occurred while parsing addition: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return render_template('adminform.html', opt=opt, message=message), 200
+        return redirect(url_for('admin')), 200
     message = 'Form successfully submitted.'
-    return render_template('adminform.html', opt=opt, message=message), 200
+    return redirect(url_for('admin')), 200
 
 @app.route(opt['APP_ROOT']+'edit/', methods=['POST'])
 @login_required
@@ -176,9 +182,9 @@ def edit_reserve():
         print('Error occurred while parsing edit: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return render_template('admin', opt=opt, message=message), 200
+        return redirect(url_for('admin')), 200
     message = 'Form successfully submitted.'
-    return render_template('admin', opt=opt, message=message), 200
+    return redirect(url_for('admin')), 200
 
 @app.route(opt['APP_ROOT']+'delete/', methods=['POST'])
 @login_required
@@ -192,10 +198,10 @@ def delete_reserve():
         print('Error occurred while parsing deletion: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return render_template('adminform.html', opt=opt, message=message), 200
+        return redirect(url_for('admin')), 200
     message = 'Form successfully submitted.'
-    return render_template('adminform.html', opt=opt, message=message), 200
-    
+    return redirect(url_for('admin')), 200
+
 if opt['SECRET']:
     app.secret_key = opt['SECRET']
 else:
