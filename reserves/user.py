@@ -1,7 +1,7 @@
 from course_reserves import opt
 import os
+import hashlib
 import psycopg2
-import ldap
 import database
 
 class User():
@@ -10,6 +10,10 @@ class User():
     to log users in from LDAP and add them to a database of users.
     """
 
+    allowed_users = {
+        'reserve': '5f4dcc3b5aa765d61d8327deb882cf99'
+    }
+    
     def __init__(self, username, session_id=None):
         "Returns a User object for Flask-Login"
         if not session_id:
@@ -19,22 +23,14 @@ class User():
         self.username = username
 
     @staticmethod
-    def try_login(host, username, password):
+    def try_login(username, password):
         "Tries to log into Laurentian's LDAP servers with the provided info."
-        try:
-            conn = ldap.initialize(host)
-            if opt['STUDENT']:
-                conn.simple_bind_s('cn=%s,ou=STD,o=LUL' % username, password)
-            else:
-                conn.simple_bind_s('cn=%s,ou=Empl,o=LUL' % username, password)
-            u = User(username)
-            u.add_to_db()
-            return u
-        except Exception, ex:
-            if opt['VERBOSE']:
-                print('Couldn\' log in:')
-                print(ex)
-            raise ex
+        if username in User.allowed_users:
+            if hashlib.md5(password).hexdigest() == User.allowed_users[username]:
+                u = User(username, os.urandom(24).encode('hex'))
+                u.add_to_db()
+                return u
+        return None
         
     @staticmethod
     def get_by_id(id):

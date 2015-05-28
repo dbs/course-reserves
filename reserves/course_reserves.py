@@ -27,13 +27,10 @@ parser.add_option('-d', '--debug', dest='DEBUG', action='store_true',
             help='Provides debug output when unhandled exceptions occur.')
 parser.add_option('-v', '--verbose', dest='VERBOSE', action='store_true',
             help='Provides verbose output for what is being done.')
-parser.add_option('-s', '--student', dest='STUDENT', action='store_true',
-            help='Authenticates against the Student LDAP')
 cmd_opt, all_opt = parser.parse_args()
 
 opt['DEBUG']  = cmd_opt.DEBUG
 opt['VERBOSE'] = cmd_opt.VERBOSE
-opt['STUDENT'] = cmd_opt.STUDENT
 
 # We import these here because they depend on opt[],
 # which needs to resolve first.
@@ -127,8 +124,7 @@ def login_form():
         if request.method == 'POST':
             try:
                 form = request.form
-                user = User.try_login(opt['LDAP_HOST'],
-                    form['username'], form['password'])
+                user = User.try_login(form['username'], form['password'])
                 session['uid'] = user.get_id()
                 login_user(user)
                 return redirect(url_for('admin')), 200
