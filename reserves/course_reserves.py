@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, abort, request, url_for, \
+from flask import Flask, abort, request, redirect, url_for, \
                     render_template, make_response, g, session
 from flask_login import LoginManager, login_required, current_user, \
                     login_user, logout_user
@@ -36,10 +36,6 @@ opt['VERBOSE'] = cmd_opt.VERBOSE
 # which needs to resolve first.
 import database
 from user import User
-
-def redirect(url):
-    "Redirects the user using an html file."
-    return render_template('redirect.html', opt=opt, url=url)
 
 @babel.localeselector
 def select_locale():
@@ -78,7 +74,7 @@ def forbidden_error(err):
     if opt['VERBOSE']:
         print('401 error:')
         print(err)
-    return redirect(url_for('login_form')), 401
+    return redirect(url_for('login_form')), 302
 
 @app.errorhandler(404)
 def not_found(err):
@@ -111,7 +107,7 @@ def lang_switch(lang):
         if opt['VERBOSE']:
             print('Language switched to: ' + lang)
         session['LANG'] = lang
-    return redirect(url_for('view_reserves')), 200
+    return redirect(url_for('view_reserves')), 302
 
 @app.route(opt['APP_ROOT']+'login/', methods=['GET', 'POST'])
 def login_form():
@@ -127,7 +123,7 @@ def login_form():
                 user = User.try_login(form['username'], form['password'])
                 session['uid'] = user.get_id()
                 login_user(user)
-                return redirect(url_for('admin')), 200
+                return redirect(url_for('admin')), 302
             except Exception, ex:
                 if opt['VERBOSE']:
                     print('Login problem ocurred:')
@@ -136,7 +132,7 @@ def login_form():
         else:
             return render_template('login.html', opt=opt), 200
     else:
-        return redirect(url_for('admin')), 200
+        return redirect(url_for('admin')), 302
 
 @app.route(opt['APP_ROOT']+'admin/', methods=['GET', 'POST'])
 @login_required
@@ -159,9 +155,9 @@ def add_reserve():
         print('Error occurred while parsing addition: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 200
+        return redirect(url_for('admin')), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 200
+    return redirect(url_for('admin')), 302
 
 @app.route(opt['APP_ROOT']+'edit/', methods=['POST'])
 @login_required
@@ -178,9 +174,9 @@ def edit_reserve():
         print('Error occurred while parsing edit: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 200
+        return redirect(url_for('admin')), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 200
+    return redirect(url_for('admin')), 302
 
 @app.route(opt['APP_ROOT']+'delete/', methods=['POST'])
 @login_required
@@ -194,9 +190,9 @@ def delete_reserve():
         print('Error occurred while parsing deletion: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 200
+        return redirect(url_for('admin')), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 200
+    return redirect(url_for('admin')), 302
 
 if opt['SECRET']:
     app.secret_key = opt['SECRET']
