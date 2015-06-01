@@ -8,7 +8,7 @@
   </head>
   <body class="container">
     <div class="header">
-      <img src="{{ url_for('static', filename = 'laurentian.jpg') }}">
+      <img src="{{ url_for('static', filename = 'laurentian.jpg') }}" alt="Laurentian University / Université Laurentienne"/>
       <h1><a href="{{ url_for('view_reserves') }}">{{ _('Reserves') }}</a></h1>
       <div class="options">
         <a href="{{ url_for('lang_switch', lang=_('fr')) }}">{{ _('Francais') }}</a>
