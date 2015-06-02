@@ -1,0 +1,243 @@
+# French translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-06-02 12:18-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: templates/404.html:5
+msgid "Not Found"
+msgstr "Non-trouvée"
+
+#: templates/404.html:8
+msgid "404 - Not Found"
+msgstr "404 - Page non trouvée"
+
+#: templates/404.html:9
+msgid "This page is not available for this application."
+msgstr "Cette page n'est pas disponible pour cet application."
+
+#: templates/404.html:11
+msgid "If you were linked to here, please bug "
+msgstr "Si vous avez été liés ici, SVP aller déranger "
+
+#: templates/500.html:5
+msgid "Internal Server Error"
+msgstr "Erreur interne du serveur"
+
+#: templates/500.html:8
+msgid "An internal server error occurred."
+msgstr "Un erreur interne s'est produit."
+
+#: templates/500.html:10
+msgid "You should probably complain about it to "
+msgstr "Vous devriez crier à "
+
+#: templates/adminform.html:6
+msgid "To Add Reserves:"
+msgstr "Pour l'insertion de réserves :"
+
+#: templates/adminform.html:7
+msgid ""
+"Fill out the form below with the course code, instructor, and bookbag ID "
+"to have it added to the reserve list."
+msgstr ""
+"Remplissez le formulaire ci-dessous avex le code de cours, l'instructeur "
+"et l'identification du \"bookbag\" pour l'avoir inseré dans la liste de "
+"réserves."
+
+#: templates/adminform.html:8
+msgid "To Modify/Delete Reserves:"
+msgstr "Pour modifier ou supprimer des réserves :"
+
+#: templates/adminform.html:9
+msgid ""
+"Click on the entry you wish to modify or delete from the list of reserves"
+" below. A window will appear where you\n"
+"           can modify the reserve information and click on \"Save\" or "
+"simply click on \"Delete This Reserve\" to delete the reserve."
+msgstr ""
+"Cliquez le réserve vous voulez modifier ou supprimer de la liste des "
+"réserves ci-dessous. Une fenêtre apparaîtra où vous\n"
+"           pouvez modifier l'info et ensuite cliquez le bouton "
+"\"Sauvegarder\" ou le bouton \"Supprimer\" pour terminer."
+
+#: templates/adminform.html:13
+msgid "Add Reserve"
+msgstr "Insertion de Réserve"
+
+#: templates/adminform.html:17 templates/adminform.html:79
+msgid "Course Code:"
+msgstr "Code de cours :"
+
+#: templates/adminform.html:21 templates/adminform.html:83
+msgid "Instructor:"
+msgstr "Instructeur :"
+
+#: templates/adminform.html:25 templates/adminform.html:87
+msgid "Bookbag ID:"
+msgstr "Identification du \"bookbag\" :"
+
+#: templates/adminform.html:29 templates/login.html:9
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/adminform.html:30
+msgid "Clear"
+msgstr "Remettre à zéro"
+
+#: templates/adminform.html:35
+msgid "Reserves on file:"
+msgstr "Réserves en fichier :"
+
+#: templates/adminform.html:36 templates/root.html:20
+msgid "Filter..."
+msgstr "Filtrage..."
+
+#: templates/adminform.html:40 templates/root.html:23
+msgid "Course Code"
+msgstr "Code de cours"
+
+#: templates/adminform.html:43 templates/root.html:24
+msgid "Instructor"
+msgstr "Instructeur"
+
+#: templates/adminform.html:73
+msgid "Edit / Delete Reserves"
+msgstr "Modification ou supprimation de réserves"
+
+#: templates/adminform.html:75
+msgid "Edit Reserve"
+msgstr "Modification"
+
+#: templates/adminform.html:91
+msgid "Save"
+msgstr "Sauvegarde"
+
+#: templates/adminform.html:92
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/adminform.html:95
+msgid "Delete Reserve"
+msgstr "Supprimation"
+
+#: templates/adminform.html:97
+msgid "Delete This Reserve"
+msgstr "Supprimer cette réserve"
+
+#: templates/header.html:12
+msgid "Reserves"
+msgstr "Réserves"
+
+#: templates/header.html:14
+msgid "fr"
+msgstr "en"
+
+#: templates/header.html:14
+msgid "Francais"
+msgstr "English"
+
+#: templates/login.html:4
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/login.html:6
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: templates/login.html:7
+msgid "Password"
+msgstr "Mot de passe"
+
+#: templates/root.html:4
+msgid "Show Instructions"
+msgstr "Montrer les instructions"
+
+#: templates/root.html:6
+msgid "Hide Instructions"
+msgstr "Cacher les instructions"
+
+#: templates/root.html:7
+msgid ""
+"Instructors may place library materials which are in high demand on "
+"reserve.\n"
+"             This ensures that the instructors' students will have access"
+" to necessary materials.\n"
+"             Reserved materials are available at the Reserve Desk and are"
+" loaned for a period of 2 hours to 3 days."
+msgstr ""
+"Les instructeurs peuvent placer des matériaux en haute demande en réserve\n"
+"Ceci garanti que les étudians auront accès aux matériaux nécéssaire pour leurs cours.\n"
+"Les matériaux réservés sont disponible au bureau de réserve et serong empruntés pour une période de deux heures à trois jours."
+
+#: templates/root.html:10
+msgid ""
+"To access reserves for a given course, type its course code into the "
+"filter bar. \n"
+"             To access reserves from a given instructor, type their name "
+"into the filter bar."
+msgstr ""
+"Pour accéder aux réserves pour un cours quelconque, tapez le code de"
+"                cours dans la barre \"Filtrage\".\n"
+"                Vous pouvez aussi filtrer avec le nom de l'instructeur si"
+"                aucun code de cours est disponible."
+
+#: templates/root.html:12
+msgid ""
+"Once the course has been found, click its entry in the table to be "
+"brought to its bookbag.\n"
+"             This bookbag gives the Call Number needed to borrow it."
+msgstr ""
+"Lorsque le cours a été trouvé, cliquez sur le rang dans la table pour"
+"                 accéder le \"bookbag\" de ce cours.\n"
+"                Ce \"bookbag\" a le numéro d'appel (Call Number) que vous"
+"                aurez besoin pour l'emprunter."
+
+#: templates/root.html:14
+msgid ""
+"Afterwards, simply go to the Reserve Desk at the Library and borrow the "
+"material using its Call Number."
+msgstr ""
+"Ensuite, présentez-vouz à la bibliothèque et empruntez lematériel avec le"
+"\n"
+"                numéro d'appel."
+
+#~ msgid "Redirecting..."
+#~ msgstr "Redirection..."
+
+#~ msgid "Not working? Click here."
+#~ msgstr "Ça ne fonctionne pas? Cliquez ici."
+
+#~ msgid ""
+#~ "Instructors may place library materials which are in\n"
+#~ "                high demand on reserve. "
+#~ "This ensures that the instructors'\n"
+#~ "                students will have access "
+#~ "to necessary materials. Reserved\n"
+#~ "                materials are available at "
+#~ "the Reserve Desk and are loaned "
+#~ "for\n"
+#~ "                a period of 2 hours to 3 days."
+#~ msgstr ""
+#~ "Les instructeurs peuvent mettre en réserves des matériaux qui sont\n"
+#~ "                à haute demande.\n"
+#~ "                Ceci garantit que les "
+#~ "étudiants auront accès aux matériaux\n"
+#~ "nécessaires pour leurs cours.\n"
+#~ "             Les matériaux qui sont "
+#~ "réservés sont disponible au bureau de"
+#~ "\n"
+#~ "réserve et seront empruntés pour une période de 2 heures à 3 jours."
+

@@ -1,0 +1,45 @@
+{% include 'header.html' %}
+
+<div>
+  <a href="#instructions">{{ _('Show Instructions') }}</a>
+  <div id="instructions" class="collapsed">
+    <a href="#">{{ _('Hide Instructions') }}</a>
+    <p>{{ _("Instructors may place library materials which are in high demand on reserve.
+             This ensures that the instructors' students will have access to necessary materials.
+             Reserved materials are available at the Reserve Desk and are loaned for a period of 2 hours to 3 days.") }}</p>
+    <p>{{ _("To access reserves for a given course, type its course code into the filter bar. 
+             To access reserves from a given instructor, type their name into the filter bar.") }}</p>
+    <p>{{ _("Once the course has been found, click its entry in the table to be brought to its bookbag.
+             This bookbag gives the Call Number needed to borrow it.") }}</p>
+    <p>{{ _("Afterwards, simply go to the Reserve Desk at the Library and borrow the material using its Call Number.") }}</p>
+  </div>
+</div>
+
+<div id="reserves">
+  <label>{{ _('Reserves on file:') }}</label>
+  <input class="search" placeholder="{{ _('Filter...') }}" />
+  <table>
+    <tr>
+      <th><button type="button" class="sort" data-sort="code">{{ _('Course Code') }}</button></th>
+      <th><button type="button" class="sort" data-sort="instructor">{{ _('Instructor') }}</button></th>
+    </tr>
+    <tbody class="list">
+      {% for reserve in data %}
+      <tr>
+        <td class="code"><button type="button" onclick="location.replace('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[0] }}</td>
+        <td class="instructor"><button type="button" onclick="location.replace('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+    var options = {
+        valueNames: [ 'code', 'instructor', 'bookbag' ]
+    };
+
+    var reserveList = new List('reserves', options);
+</script>
+
+{% include 'footer.html' %}

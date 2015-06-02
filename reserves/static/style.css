@@ -1,0 +1,145 @@
+body {
+  font-family: Helvetica, sans-serif;
+  font-size: 0.9em;
+}
+h1 {
+  color: #05A;
+}
+h2 {
+  color: #05A;
+}
+h3 {
+  color: #05A;
+}
+a {
+  color: #05A;
+  text-decoration: none;
+}
+a:visited {
+  color: #05A;
+  text-decoration: none;
+}
+a:hover {
+  color: #FC2;
+  text-decoration: underline;
+}
+
+div {
+  margin-bottom: 1em;
+}
+div.header {
+  margin: 0px;
+  margin-bottom: 1em;
+  width: 100%;
+  height: 90px;
+  border-bottom: 5px solid #05A;
+}
+div.header img {
+  float:left;
+}
+div.header h1 {
+  float:right;
+}
+.container {
+  width: 960px;
+  margin: 0 auto;
+}
+div.center {
+  margin: auto;
+  width: 70%;
+}
+.options {
+  border:           solid 2px #05A;
+  padding:          3px;
+  font-size:        16px;
+  position:   absolute;
+  right:      5px;
+  top:        5px;
+  float:      top-right;
+}
+
+.content > div{
+    border: 2px solid #05A;
+    padding: .25em;
+}
+.collapsed {
+    display: none;
+}
+.collapsed:target {
+    display: block;
+}
+
+input.search{
+    width: 30%;
+    padding: 1px;
+    float: right;
+    margin: 0px 0px 2px 0px;
+    border: 1px solid #111;
+}
+button.sort {
+    width: 100%;
+    padding: 3px;
+    font-weight: bold;
+    background-color: #BBB;
+    border: 0px;
+}
+button.sort:hover {
+    background-color: #DDD;
+}
+button.sort.asc:before {
+    content: "\25B2 ";
+}
+button.sort.desc:before {
+    content: "\25BC ";
+}
+
+#reserves table {
+    width: 100%;
+    padding: 2px;
+    text-align: center;
+    table-layout: fixed;
+}
+#reserves tr {
+    padding: 0px;
+}
+#reserves tr[onclick]:hover {
+    background-color: #DDD;
+    
+}
+#reserves th {
+    padding: 0px;
+    border: 1px solid #444;
+}
+#reserves td {
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid #888;
+}
+#reserves th, td {
+    width: 1%;
+}
+#reserves td button {
+    display: block;
+    margin: 0px;
+    padding: 4px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #FFF;
+}
+#reserves td button:hover {
+    background-color: #DDD;
+}
+#reserves table, th, td {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+form > table {
+    width: auto;
+    height: auto;
+}
+form > table td {
+    width: auto;
+    height: auto;
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>{{ _(opt['PAGE_TITLE']) }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='list.js') }}"></script>
+  </head>
+  <body class="container">
+    <div class="header">
+      <img src="{{ url_for('static', filename = 'laurentian.jpg') }}" alt="Laurentian University / Université Laurentienne"/>
+      <h1><a href="{{ url_for('view_reserves') }}">{{ _('Reserves') }}</a></h1>
+      <div class="options">
+        <a href="{{ url_for('lang_switch', lang=_('fr')) }}">{{ _('Francais') }}</a>
+      </div>
+    </div>
+    <div class="content">
