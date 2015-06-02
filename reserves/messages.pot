@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-27 09:13-0400\n"
+"POT-Creation-Date: 2015-06-02 12:49-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,15 +71,15 @@ msgstr ""
 msgid "Add Reserve"
 msgstr ""
 
-#: templates/adminform.html:17 templates/adminform.html:40
+#: templates/adminform.html:17 templates/adminform.html:79
 msgid "Course Code:"
 msgstr ""
 
-#: templates/adminform.html:21 templates/adminform.html:44
+#: templates/adminform.html:21 templates/adminform.html:83
 msgid "Instructor:"
 msgstr ""
 
-#: templates/adminform.html:25 templates/adminform.html:48
+#: templates/adminform.html:25 templates/adminform.html:87
 msgid "Bookbag ID:"
 msgstr ""
 
@@ -91,27 +91,43 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: templates/adminform.html:34
+#: templates/adminform.html:35 templates/root.html:19
+msgid "Reserves on file:"
+msgstr ""
+
+#: templates/adminform.html:36 templates/root.html:20
+msgid "Filter..."
+msgstr ""
+
+#: templates/adminform.html:40 templates/root.html:23
+msgid "Course Code"
+msgstr ""
+
+#: templates/adminform.html:43 templates/root.html:24
+msgid "Instructor"
+msgstr ""
+
+#: templates/adminform.html:73
 msgid "Edit / Delete Reserves"
 msgstr ""
 
-#: templates/adminform.html:36
+#: templates/adminform.html:75
 msgid "Edit Reserve"
 msgstr ""
 
-#: templates/adminform.html:52
+#: templates/adminform.html:91
 msgid "Save"
 msgstr ""
 
-#: templates/adminform.html:53
+#: templates/adminform.html:92
 msgid "Cancel"
 msgstr ""
 
-#: templates/adminform.html:56
+#: templates/adminform.html:95
 msgid "Delete Reserve"
 msgstr ""
 
-#: templates/adminform.html:58
+#: templates/adminform.html:97
 msgid "Delete This Reserve"
 msgstr ""
 
@@ -139,14 +155,6 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: templates/redirect.html:7
-msgid "Redirecting..."
-msgstr ""
-
-#: templates/redirect.html:8
-msgid "Not working? Click here."
-msgstr ""
-
 #: templates/root.html:4
 msgid "Show Instructions"
 msgstr ""
@@ -157,49 +165,32 @@ msgstr ""
 
 #: templates/root.html:7
 msgid ""
-"Instructors may place library materials which are in\n"
-"                high demand on reserve. This ensures that the "
-"instructors'\n"
-"                students will have access to necessary materials. "
-"Reserved\n"
-"                materials are available at the Reserve Desk and are "
-"loaned for\n"
-"                a period of 2 hours to 3 days."
+"Instructors may place library materials which are in high demand on "
+"reserve.\n"
+"             This ensures that the instructors' students will have access"
+" to necessary materials.\n"
+"             Reserved materials are available at the Reserve Desk and are"
+" loaned for a period of 2 hours to 3 days."
+msgstr ""
+
+#: templates/root.html:10
+msgid ""
+"To access reserves for a given course, type its course code into the "
+"filter bar. \n"
+"             To access reserves from a given instructor, type their name "
+"into the filter bar."
 msgstr ""
 
 #: templates/root.html:12
 msgid ""
-"To access reserves for a given course, type its course code\n"
-"                into the filter bar. To access reserves from a given\n"
-"                instructor, type their name into the filter bar."
+"Once the course has been found, click its entry in the table to be "
+"brought to its bookbag.\n"
+"             This bookbag gives the Call Number needed to borrow it."
 msgstr ""
 
-#: templates/root.html:15
+#: templates/root.html:14
 msgid ""
-"Once the course has been found, click its entry in the table\n"
-"                to be brought to its bookbag. This bookbag gives the\n"
-"                Call Number needed to borrow it."
-msgstr ""
-
-#: templates/root.html:18
-msgid ""
-"Afterwards, simply go to the Reserve Desk at the Library\n"
-"                and borrow the material using its Call Number."
-msgstr ""
-
-#: templates/root.html:24
-msgid "Reserves on file:"
-msgstr ""
-
-#: templates/root.html:25
-msgid "Filter..."
-msgstr ""
-
-#: templates/root.html:29
-msgid "Course Code"
-msgstr ""
-
-#: templates/root.html:32
-msgid "Instructor"
+"Afterwards, simply go to the Reserve Desk at the Library and borrow the "
+"material using its Call Number."
 msgstr ""
 
