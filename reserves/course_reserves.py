@@ -92,15 +92,15 @@ def server_problem(err):
         print(err)
     return render_template('500.html', opt=opt), 500
 
-@app.route(opt['APP_ROOT'], methods=['GET', 'POST'])
-@app.route(opt['APP_ROOT']+'view/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/view/', methods=['GET', 'POST'])
 def view_reserves():
     "Our root page - show the list of reserves to the user."
     logout_user()
     return render_template('root.html',
             data=database.get_reserves(), opt=opt), 200
 
-@app.route(opt['APP_ROOT']+'lang/<lang>/', methods=['GET', 'POST'])
+@app.route('/lang/<lang>/', methods=['GET', 'POST'])
 def lang_switch(lang):
     "Switch languages in the session out of a list of supported ones."
     if lang in ['en', 'fr']:
@@ -109,7 +109,7 @@ def lang_switch(lang):
         session['LANG'] = lang
     return redirect(url_for('view_reserves')), 302
 
-@app.route(opt['APP_ROOT']+'login/', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login_form():
     """
     Gives the user a nice login form
@@ -134,14 +134,14 @@ def login_form():
     else:
         return redirect(url_for('admin')), 302
 
-@app.route(opt['APP_ROOT']+'admin/', methods=['GET', 'POST'])
+@app.route('/admin/', methods=['GET', 'POST'])
 @login_required
 def admin():
     "Gives the administrator a page with forms to modify the database."
     return render_template('adminform.html',
         opt=opt, data=database.get_reserves()), 200
 
-@app.route(opt['APP_ROOT']+'add/', methods=['POST'])
+@app.route('/add/', methods=['POST'])
 @login_required
 def add_reserve():
     "Parses the form to add a reserve."
@@ -159,7 +159,7 @@ def add_reserve():
     message = 'Form successfully submitted.'
     return redirect(url_for('admin')), 302
 
-@app.route(opt['APP_ROOT']+'edit/', methods=['POST'])
+@app.route('/edit/', methods=['POST'])
 @login_required
 def edit_reserve():
     "Parses the form to edit a reserve."
@@ -178,7 +178,7 @@ def edit_reserve():
     message = 'Form successfully submitted.'
     return redirect(url_for('admin')), 302
 
-@app.route(opt['APP_ROOT']+'delete/', methods=['POST'])
+@app.route('/delete/', methods=['POST'])
 @login_required
 def delete_reserve():
     "Parses the form to delete a reserve."
