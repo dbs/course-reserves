@@ -19,7 +19,8 @@ babel = Babel(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-c = ConfigFile('config.ini')
+print(app.root_path)
+c = ConfigFile(app.root_path + '/config.ini')
 opt = c.getsection('Reserves')
 
 parser = OptionParser()
