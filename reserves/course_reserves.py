@@ -4,7 +4,7 @@ from flask import Flask, abort, request, redirect, url_for, \
                     render_template, make_response, g, session
 from flask_login import LoginManager, login_required, current_user, \
                     login_user, logout_user
-from flask_babelex import Babel
+from flask_babelex import Babel, _
 from os.path import abspath, dirname
 from optparse import OptionParser
 from conf import ConfigFile
@@ -40,18 +40,23 @@ opt['STUDENT'] = cmd_opt.STUDENT
 import database
 from user import User
 
+@app.before_request
+def pre_request():
+    if request.view_args and 'lang' in request.view_args:
+        lang = request.view_args['lang']
+        if lang in ['en', 'fr']:
+            g.current_lang = lang
+            request.view_args.pop('lang')
+        else:
+            return abort(404)
+
 @babel.localeselector
 def select_locale():
     """
     Selects the locale. Babel uses this to
     determine which language to go with.
     """
-    try:
-        if opt['VERBOSE']:
-            print(session['LANG'])
-        return session['LANG']
-    except Exception, ex:
-        return opt['LANG']
+    return g.get('current_lang', 'en')
 
 @login_manager.user_loader
 def load_user(id):
@@ -77,7 +82,7 @@ def forbidden_error(err):
     if opt['VERBOSE']:
         print('401 error:')
         print(err)
-    return redirect(url_for('login_form')), 302
+    return redirect(url_for('login_form', lang=_('en'))), 302
 
 @app.errorhandler(404)
 def not_found(err):
@@ -95,24 +100,15 @@ def server_problem(err):
         print(err)
     return render_template('500.html', opt=opt), 500
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/view/', methods=['GET', 'POST'])
+@app.route('/<lang>/', methods=['GET', 'POST'])
+@app.route('/<lang>/view/', methods=['GET', 'POST'])
 def view_reserves():
     "Our root page - show the list of reserves to the user."
     logout_user()
     return render_template('root.html',
             data=database.get_reserves(), opt=opt), 200
 
-@app.route('/lang/<lang>/', methods=['GET', 'POST'])
-def lang_switch(lang):
-    "Switch languages in the session out of a list of supported ones."
-    if lang in ['en', 'fr']:
-        if opt['VERBOSE']:
-            print('Language switched to: ' + lang)
-        session['LANG'] = lang
-    return redirect(url_for('view_reserves')), 302
-
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/<lang>/login/', methods=['GET', 'POST'])
 def login_form():
     """
     Gives the user a nice login form
@@ -127,7 +123,7 @@ def login_form():
                     form['username'], form['password'])
                 session['uid'] = user.get_id()
                 login_user(user)
-                return redirect(url_for('admin')), 302
+                return redirect(url_for('admin', lang=_('en'))), 302
             except Exception, ex:
                 if opt['VERBOSE']:
                     print('Login problem ocurred:')
@@ -136,16 +132,16 @@ def login_form():
         else:
             return render_template('login.html', opt=opt), 200
     else:
-        return redirect(url_for('admin')), 302
+        return redirect(url_for('admin', lang=_('en'))), 302
 
-@app.route('/admin/', methods=['GET', 'POST'])
+@app.route('/<lang>/admin/', methods=['GET', 'POST'])
 @login_required
 def admin():
     "Gives the administrator a page with forms to modify the database."
     return render_template('adminform.html',
         opt=opt, data=database.get_reserves()), 200
 
-@app.route('/add/', methods=['POST'])
+@app.route('/<lang>/add/', methods=['POST'])
 @login_required
 def add_reserve():
     "Parses the form to add a reserve."
@@ -159,11 +155,11 @@ def add_reserve():
         print('Error occurred while parsing addition: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 302
+        return redirect(url_for('admin', lang=_('en'))), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 302
+    return redirect(url_for('admin', lang=_('en'))), 302
 
-@app.route('/edit/', methods=['POST'])
+@app.route('/<lang>/edit/', methods=['POST'])
 @login_required
 def edit_reserve():
     "Parses the form to edit a reserve."
@@ -178,11 +174,11 @@ def edit_reserve():
         print('Error occurred while parsing edit: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 302
+        return redirect(url_for('admin', lang=_('en'))), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 302
+    return redirect(url_for('admin', lang=_('en'))), 302
 
-@app.route('/delete/', methods=['POST'])
+@app.route('/<lang>/delete/', methods=['POST'])
 @login_required
 def delete_reserve():
     "Parses the form to delete a reserve."
@@ -194,9 +190,9 @@ def delete_reserve():
         print('Error occurred while parsing deletion: ')
         print(ex)
         message = 'Couldn\'t submit form.'
-        return redirect(url_for('admin')), 302
+        return redirect(url_for('admin', lang=_('en'))), 302
     message = 'Form successfully submitted.'
-    return redirect(url_for('admin')), 302
+    return redirect(url_for('admin', lang=_('en'))), 302
 
 if opt['SECRET']:
     app.secret_key = opt['SECRET']
