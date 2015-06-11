@@ -4,6 +4,8 @@ import psycopg2
 import ldap
 import database
 
+authorized = []
+
 class User():
     """
     A class necessary for Flask-Login to function. It holds methods
@@ -22,6 +24,8 @@ class User():
     def try_login(host, username, password):
         "Tries to log into Laurentian's LDAP servers with the provided info."
         try:
+            if username not in authorized:
+                return None
             conn = ldap.initialize(host)
             if opt['STUDENT']:
                 conn.simple_bind_s('cn=%s,ou=STD,o=LUL' % username, password)
