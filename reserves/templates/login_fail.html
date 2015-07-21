@@ -1,8 +1,8 @@
 {% include 'header.html' %}
     
 <div>
-    <h1>Login failed.</h1>
-    <a href="{{ url_for('login_form') }}">Try again</a>
+    <h1>{{ _('Login failed.') }}</h1>
+    <a href="{{ url_for('login_form', lang = _('en')) }}">{{ _('Try again') }}</a>
 </div>
 
 {% include 'footer.html' %}
