@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from flask import Flask, abort, request, redirect, url_for, \
                     render_template, make_response, g, session
@@ -13,11 +14,38 @@ import ldap
 import psycopg2
 import StringIO
 
+class LocalCGIRootFix(object):
+    """Wrap the application in this middleware if you are using FastCGI or CGI
+    and you have problems with your app root being set to the cgi script's path
+    instead of the path users are going to visit
+    .. versionchanged:: 0.9
+       Added `app_root` parameter and renamed from `LighttpdCGIRootFix`.
+    :param app: the WSGI application
+    :param app_root: Defaulting to ``'/'``, you can set this to something else
+        if your app is mounted somewhere else.
+
+    Clone of workzeug.contrib.fixers.CGIRootFix, but doesn't strip leading '/'
+    """
+
+    def __init__(self, app, app_root='/'):
+        self.app = app
+        self.app_root = app_root
+
+    def __call__(self, environ, start_response):
+        # only set PATH_INFO for older versions of Lighty or if no
+        # server software is provided.  That's because the test was
+        # added in newer Werkzeug versions and we don't want to break
+        # people's code if they are using this fixer in a test that
+        # does not set the SERVER_SOFTWARE key.
+        if 'SERVER_SOFTWARE' not in environ or \
+           environ['SERVER_SOFTWARE'] < 'lighttpd/1.4.28':
+            environ['PATH_INFO'] = environ.get('SCRIPT_NAME', '') + \
+                environ.get('PATH_INFO', '')
+        environ['SCRIPT_NAME'] = self.app_root.rstrip('/')
+        return self.app(environ, start_response)
+
 app = Flask(__name__)
 app.root_path = abspath(dirname(__file__))
-babel = Babel(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 c = ConfigFile(app.root_path + '/config.ini')
 opt = c.getsection('Reserves')
@@ -34,6 +62,21 @@ cmd_opt, all_opt = parser.parse_args()
 opt['DEBUG']  = cmd_opt.DEBUG
 opt['VERBOSE'] = cmd_opt.VERBOSE
 opt['STUDENT'] = cmd_opt.STUDENT
+
+if opt['SECRET']:
+    app.secret_key = opt['SECRET']
+else:
+    print('No secret key has been set. Aborting.')
+    exit()
+
+if opt['VERBOSE']:
+    print('Using options:')
+    print(opt)
+
+app.wsgi_app = LocalCGIRootFix(app.wsgi_app, app_root=opt['APP_ROOT'])
+babel = Babel(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 # We import these here because they depend on opt[],
 # which needs to resolve first.
@@ -194,15 +237,6 @@ def delete_reserve():
     message = 'Form successfully submitted.'
     return redirect(url_for('admin', lang=_('en'))), 302
 
-if opt['SECRET']:
-    app.secret_key = opt['SECRET']
-else:
-    print('No secret key has been set. Aborting.')
-    exit()
-
-if opt['VERBOSE']:
-    print('Using options:')
-    print(opt)
 
 if __name__ == '__main__':
     app.run(debug=opt['DEBUG'], host=opt['HOST'], port=opt['PORT'])
