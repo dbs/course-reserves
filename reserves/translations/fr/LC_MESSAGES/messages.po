@@ -212,7 +212,7 @@ msgstr "Trouver des documents en réserve :"
 #: templates/root.html:11
 msgid ""
 "To access reserves for a given course, type its course code into the "
-"filter bar. \n"
+"filter bar.\n"
 "             To access reserves from a given instructor, type their name "
 "into the filter bar."
 msgstr ""
@@ -235,7 +235,7 @@ msgstr ""
 "ouvrages dans la liste pour pouvoir les emprunter."
 
 #: templates/root.html:15
-msgid "For instance:"
+msgid "For example:"
 msgstr "Par exemple :"
 
 #: templates/root.html:16
@@ -244,7 +244,7 @@ msgstr "Instructions"
 
 #: templates/root.html:17
 msgid ""
-"Afterwards, simply go to the Reserve Desk at the Library and borrow the "
+"Afterwards, go to the Reserve Desk at the Library and borrow the "
 "material using its Call Number."
 msgstr ""
 "Présentez-vouz au comptoir de prêt à la bibliothèque pour emprunter vos "
