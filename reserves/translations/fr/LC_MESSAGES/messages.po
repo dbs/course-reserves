@@ -176,7 +176,7 @@ msgstr "Mot de passe"
 
 #: templates/login_fail.html:4
 msgid "Login failed."
-msgstr "Connexion failli."
+msgstr "Connexion échouée."
 
 #: templates/login_fail.html:5
 msgid "Try again"
@@ -199,42 +199,56 @@ msgid ""
 "             Reserved materials are available at the Reserve Desk and are"
 " loaned for a period of 2 hours to 3 days."
 msgstr ""
-"Les professeurs peuvent mettre des documents à la réserve pour un cours."
-"\n"
-" Afin de permettre aux étudiants l'accès aux lectures obligatoires pour "
+"Les professeurs peuvent mettre des documents à la réserve pour un cours "
+"afin de permettre aux étudiants l'accès aux lectures obligatoires pour "
 "leurs cours.\n"
-"Ces documents sont mis à la disposition des étudiants au comptoir de prêt (Reserve Desk)"
-"pour une période limitée de deux heures à trois jours."
+"Ces documents sont mis à la disposition des étudiants au comptoir de prêt"
+" (Reserve Desk) pour une période limitée de deux heures à trois jours."
 
 #: templates/root.html:10
+msgid "Finding documents in reserve:"
+msgstr "Trouver des documents en réserve :"
+
+#: templates/root.html:11
 msgid ""
 "To access reserves for a given course, type its course code into the "
 "filter bar. \n"
 "             To access reserves from a given instructor, type their name "
 "into the filter bar."
 msgstr ""
-"Pour accéder aux documents en réserve pour un cours, veuillez écrire le code de"
-"                cours dans le champ de recherche \"Filtrage\".\n"
+"Pour accéder aux documents en réserve pour un cours, veuillez écrire le "
+"code de                cours dans le champ de recherche \"Filtrage\".\n"
 "                Vous pouvez aussi filtrer avec le nom du professeur si"
 "                aucun code de cours n'est disponible."
 
-#: templates/root.html:12
+#: templates/root.html:13
 msgid ""
 "Once the course has been found, click its entry in the table to be "
 "brought to its bookbag.\n"
 "             This bookbag gives the Call Number needed to borrow it."
 msgstr ""
-"Lorsque le cours a été présenté à l'écran, cliquez dans la case du cours dans le tableau pour"
-"                accéder à la liste des ouvrages mis en réserve pour ce cours.\n"
-"                Vous aurez besoin de noter le numéro à 3 chiffres présenté sous la côte (Call Number)"
-"                pour chacun des ouvrages dans la liste pour pouvoir les emprunter."
+"Lorsque le cours a été présenté à l'écran, cliquez dans la case du cours "
+"dans le tableau pour                accéder à la liste des ouvrages mis "
+"en réserve pour ce cours.\n"
+"                Vous aurez besoin de noter le numéro à 3 chiffres "
+"présenté sous la côte (Call Number)                pour chacun des "
+"ouvrages dans la liste pour pouvoir les emprunter."
 
-#: templates/root.html:14
+#: templates/root.html:15
+msgid "For instance:"
+msgstr "Par exemple :"
+
+#: templates/root.html:16
+msgid "Instructions"
+msgstr "Instructions"
+
+#: templates/root.html:17
 msgid ""
 "Afterwards, simply go to the Reserve Desk at the Library and borrow the "
 "material using its Call Number."
 msgstr ""
-"Présentez-vouz au comptoir de prêt à la bibliothèque pour emprunter vos documents en indiquant qu'il s'agit d'un document mis en réserve."
+"Présentez-vouz au comptoir de prêt à la bibliothèque pour emprunter vos "
+"documents en indiquant qu'il s'agit d'un document mis en réserve."
 
 #~ msgid "Redirecting..."
 #~ msgstr "Redirection..."

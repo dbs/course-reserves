@@ -7,10 +7,13 @@
     <p>{{ _("Instructors may place library materials which are in high demand on reserve.
              This ensures that the instructors' students will have access to necessary materials.
              Reserved materials are available at the Reserve Desk and are loaned for a period of 2 hours to 3 days.") }}</p>
+    <p>{{ _("Finding documents in reserve:") }}</p>
     <p>{{ _("To access reserves for a given course, type its course code into the filter bar. 
              To access reserves from a given instructor, type their name into the filter bar.") }}</p>
     <p>{{ _("Once the course has been found, click its entry in the table to be brought to its bookbag.
              This bookbag gives the Call Number needed to borrow it.") }}</p>
+    <p>{{ _("For instance:") }}</p>
+    <img src="{{ url_for('static', filename = 'instructions_'+_('en')+'.jpg', lang=_('en')) }}" alt="{{ _('Instructions') }}" />
     <p>{{ _("Afterwards, simply go to the Reserve Desk at the Library and borrow the material using its Call Number.") }}</p>
   </div>
 </div>
