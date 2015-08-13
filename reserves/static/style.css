@@ -118,16 +118,14 @@ button.sort.desc:before {
 #reserves th, td {
     width: 1%;
 }
-#reserves td button {
-    display: block;
+#reserves td {
     margin: 0px;
     padding: 4px;
     width: 100%;
     height: 100%;
-    border: none;
     background-color: #FFF;
 }
-#reserves td button:hover {
+#reserves td:hover {
     background-color: #DDD;
 }
 #reserves table, th, td {

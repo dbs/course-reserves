@@ -46,16 +46,14 @@
           <tbody class="list">
             {% for reserve in data %}
             <tr>
-              <td class="code">
-              <button onclick="
+              <td class="code" onclick="
                   document.getElementsByName('reserve_id')[0].value = '{{ reserve[3] }}';
                   document.getElementsByName('reserve_id')[1].value = '{{ reserve[3] }}';
-              ">{{ reserve[0] }}</button>
-              <td class="instructor">
-              <button onclick="
+              ">{{ reserve[0] }}</td>
+              <td class="instructor" onclick="
                   document.getElementsByName('reserve_id')[0].value = '{{ reserve[3] }}';
                   document.getElementsByName('reserve_id')[1].value = '{{ reserve[3] }}';
-              ">{{ reserve[1] }}</button>
+              ">{{ reserve[1] }}</td>
             </tr>
             {% endfor %}
           </tbody>
