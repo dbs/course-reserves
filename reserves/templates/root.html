@@ -29,8 +29,8 @@
     <tbody class="list">
       {% for reserve in data %}
       <tr>
-        <td class="code"><button type="button" onclick="location.replace('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[0] }}</td>
-        <td class="instructor"><button type="button" onclick="location.replace('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[1] }}</td>
+        <td class="code" onclick="window.open('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[0] }}</td>
+        <td class="instructor" onclick="window.open('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[1] }}</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -43,6 +43,8 @@
     };
 
     var reserveList = new List('reserves', options);
+
+    reserveList.sort('code', { order: 'asc' });
 </script>
 
 {% include 'footer.html' %}
