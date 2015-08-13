@@ -610,6 +610,8 @@ require.register("javve-natural-sort/index.js", function(exports, require, modul
  * Author: Jim Palmer (based on chunking idea from Dave Koelle)
  */
 
+/*
+
 module.exports = function(a, b, options) {
   var re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi,
     sre = /(^[ ]*|[ ]*$)/g,
@@ -651,18 +653,18 @@ module.exports = function(a, b, options) {
   return 0;
 };
 
-/*
-var defaultSort = getSortFunction();
+*/
 
-module.exports = function(a, b, options) {
+//var defaultSort = getSortFunction();
+
+module.exports = sort: function(a, b, options) {
   if (arguments.length == 1) {
     options = a;
-    return getSortFunction(options);
+    return sort(options);
   } else {
-    return defaultSort(a,b);
+    return sort(a,b);
   }
 }
-*/
 });
 require.register("javve-to-string/index.js", function(exports, require, module){
 module.exports = function(s) {
