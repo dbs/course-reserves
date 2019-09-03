@@ -29,8 +29,8 @@
     <tbody class="list">
       {% for reserve in data %}
       <tr>
-        <td class="code" onclick="window.open('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[0] }}</td>
-        <td class="instructor" onclick="window.open('https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105')">{{ reserve[1] }}</td>
+        <td class="code"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105">{{ reserve[0] }}</a></td>
+        <td class="instructor"><a href="https://laurentian.concat.ca/eg/opac/results?bookbag={{ reserve[2] }};logc=105">{{ reserve[1] }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
