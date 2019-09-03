@@ -12,10 +12,9 @@ def get_db():
     """
     try:
         return psycopg2.connect(
-            database=opt['DB_NAME'],
-            user=opt['DB_USER']
+            database=opt['DB_NAME']
         )
-    except Exception, ex:
+    except Exception as ex:
         if opt['VERBOSE']:
             print(ex)
 
@@ -31,7 +30,7 @@ def get_reserves():
         result = cur.fetchall()
         dbh.close()
         return result
-    except Exception, ex:
+    except Exception as ex:
         if opt['VERBOSE']:
             print('Couldn\'t get table for reserves: ')
             print(ex)
@@ -46,7 +45,7 @@ def add_reserve(code, instructor, bookbag):
         cur.execute("""INSERT INTO reserve VALUES (%s, %s, %s, %s)""", 
                     (os.urandom(24).encode('hex'),
                     code, instructor, bookbag))
-    except Exception, ex:
+    except Exception as ex:
         if opt['VERBOSE']:
             print('Couldn\'t add a reserve: ')
             print(ex)
@@ -63,7 +62,7 @@ def edit_reserve(id, code, instructor, bookbag):
     try:
         cur.execute("""UPDATE reserve SET course_code = %s, instructor = %s,
             bookbag_id = %s WHERE id = %s""", (code, instructor, bookbag, id))
-    except Exception, ex:
+    except Exception as ex:
         if opt['VERBOSE']:
             print('Couldn\'t edit a reserve: ')
             print(ex)
@@ -83,7 +82,7 @@ def delete_reserve(id):
         print(id)
     try:
         cur.execute("""DELETE FROM reserve where id = '%s'""" % id)
-    except Exception, ex:
+    except Exception as ex:
         if opt['VERBOSE']:
             print('Could not delete reserve:')
             print(ex)

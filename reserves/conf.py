@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import re
 
 class ConfigFile():
@@ -8,7 +8,7 @@ class ConfigFile():
     automatically convert values to ints or booleans.
     """
     def __init__(self, path):
-        self.conf = ConfigParser.ConfigParser()
+        self.conf = configparser.ConfigParser()
         self.conf.read(path)
 
     def getsection(self, section):

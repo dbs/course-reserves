@@ -15,7 +15,7 @@ class User():
     def __init__(self, username, session_id=None):
         "Returns a User object for Flask-Login"
         if not session_id:
-            self.id = os.urandom(24).encode('hex')
+            self.id = os.urandom(24).hex()
         else:
             self.id = session_id
         self.username = username
@@ -34,9 +34,9 @@ class User():
             u = User(username)
             u.add_to_db()
             return u
-        except Exception, ex:
+        except Exception as ex:
             if opt['VERBOSE']:
-                print('Couldn\' log in:')
+                print("Couldn't log in:")
                 print(ex)
             raise ex
         
@@ -48,10 +48,10 @@ class User():
         try:
             cur.execute("SELECT * FROM get_users WHERE id = '%s'" % id)
             return User(cur.fetchone()[1], id)
-        except Exception, ex:
+        except Exception as ex:
             if opt['VERBOSE']:
                 print('Couldn\'t query database, or user is expired:')
-                print(ex)
+                traceback.print_exc()
         dbh.close()
         return None
 
@@ -62,9 +62,9 @@ class User():
         try:
             cur.execute("INSERT INTO users VALUES (%s, %s)",
                 (self.id, self.username))
-        except Exception, ex:
+        except Exception as ex:
             print('Could\'t add user to database:')
-            print('ex')
+            print(ex)
         dbh.commit()
         dbh.close()
 

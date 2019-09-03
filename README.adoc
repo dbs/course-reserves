@@ -6,13 +6,19 @@ A little system to allow for reserves on courses. Professors can ask that requir
 
 == Requirements
 
-* +Python 2.6+
+* +Python 3+
 * +Python-LDAP+
 * +Flask+
 ** +Flask-Login+
 ** +Flask-Babel+
+** +Flask-BabelEx+
 * +PostgreSQL+
-** +PsychoPG2+
+** +PsycoPG2+
+* +Twisted+
+
+You can install the prerequisites using +pipenv+:
+
+    pipenv install
 
 == Installation
 
