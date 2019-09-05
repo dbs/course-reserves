@@ -3,10 +3,11 @@ import os
 import psycopg2
 import ldap
 import database
+import flask_login
 
 authorized = []
 
-class User():
+class User(flask_login.UserMixin):
     """
     A class necessary for Flask-Login to function. It holds methods
     to log users in from LDAP and add them to a database of users.
@@ -67,23 +68,3 @@ class User():
             print(ex)
         dbh.commit()
         dbh.close()
-
-    def is_authenticated(self):
-        """
-        Returns the authentication status of a user.
-        Because this user always requires a password, this is always true.
-        Needed by Flask-Login.
-        """
-        return True
-
-    def is_active(self):
-        "Like above - this is needed by Flask-Login."
-        return True
-
-    def is_anonymous(self):
-        "Needed by Flask-Login."
-        return False
-
-    def get_id(self):
-        "Returns the user's UID."
-        return self.id

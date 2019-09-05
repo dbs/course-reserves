@@ -81,29 +81,20 @@ login_manager.init_app(app)
 import database
 from user import User
 
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return flask.redirect(flask.url_for('login', lang=_('en'), next=flask.request.url))
+
 @app.before_request
 def pre_request():
-    if flask.request.view_args and 'lang' in flask.request.view_args:
-        lang = flask.request.view_args['lang']
-        if lang in ['en', 'fr']:
-            flask.g.current_lang = lang
-            flask.request.view_args.pop('lang')
-        else:
-            return flask.abort(404)
     try:
-        if 'uid' not in flask.session:
-            flask_login.logout_user()
-            return
-        user = User.get_by_id(flask.session['uid'])
-        if user is None:
-            flask_login.logout_user()
-        else:
-            flask_login.current_user = user
-    except Exception as ex:
-        if opt['VERBOSE']:
-            print('Exception occurred on user:')
-            traceback.print_exc()
-        flask_login.logout_user()
+        if flask.request.view_args and 'lang' in flask.request.view_args:
+            lang = flask.request.view_args['lang']
+            if lang in ['en', 'fr']:
+                flask.g.current_lang = lang
+                flask.request.view_args.pop('lang')
+    except:
+        traceback.print_exc()
 
 @babel.localeselector
 def select_locale():
@@ -115,7 +106,16 @@ def select_locale():
 
 @login_manager.user_loader
 def load_user(id):
-    return User.get_by_id(id)
+    try:
+        u = User.get_by_id(id)
+        if opt['VERBOSE']:
+            if u is not None:
+                print("User is " + u.username)
+            else:
+                print("User is None")
+        return u
+    except:
+        traceback.print_exc()
 
 @app.errorhandler(401)
 def forbidden_error(err):
@@ -123,7 +123,7 @@ def forbidden_error(err):
     if opt['VERBOSE']:
         print('401 error:')
         print(err)
-    return flask.redirect(flask.url_for('login_form', lang=_('en'))), 302
+    return flask.redirect(flask.url_for('login', lang=_('en'))), 302
 
 @app.errorhandler(404)
 def not_found(err):
@@ -139,51 +139,59 @@ def server_problem(err):
     if opt['VERBOSE']:
         print('500 error:')
         print(err)
+        traceback.print_exc()
     return flask.render_template('500.html', opt=opt), 500
 
 @app.route('/<lang>/', methods=['GET', 'POST'])
 @app.route('/<lang>/view/', methods=['GET', 'POST'])
 def view_reserves():
     "Our root page - show the list of reserves to the user."
-    flask_login.logout_user()
     return flask.render_template('root.html',
             data=database.get_reserves(), opt=opt), 200
 
+@app.route('/<lang>/logout/')
+def logout():
+    flask_login.logout_user()
+    return flask.redirect(flask.url_for('view_reserves', lang=_('en'))), 302
+
 @app.route('/<lang>/login/', methods=['GET', 'POST'])
-def login_form():
+def login():
     """
     Gives the user a nice login form
     
     Afterwards, an LDAP server is queried to see if the credentials are valid.
     """
     try:
-        if not flask_login.current_user.is_authenticated:
-            if flask.request.method == 'POST':
-                try:
-                    form = flask.request.form
-                    user = User.try_login(opt['LDAP_HOST'],
-                        form['username'], form['password'])
-                    flask.session['uid'] = user.get_id()
-                    flask_login.login_user(user)
-                    return flask.redirect(flask.url_for('admin', lang=_('en'))), 302
-                except Exception as ex:
-                    if opt['VERBOSE']:
-                        print('Login problem ocurred:')
-                        print(ex)
-                    return flask.render_template('login_fail.html', opt=opt), 200
-            else:
-                return flask.render_template('login.html', opt=opt), 200
+        if flask.request.method == 'POST':
+            try:
+                form = flask.request.form
+                user = User.try_login(opt['LDAP_HOST'],
+                    form['username'], form['password'])
+                flask.session['uid'] = user.id
+                flask_login.login_user(user)
+                flask.flash("Welcome back, {}".format(user.username))
+                return flask.redirect(flask.url_for('admin', lang=_('en'))), 302
+            except Exception as ex:
+                if opt['VERBOSE']:
+                    print('Login problem ocurred:')
+                    print(ex)
+                return flask.render_template('login_fail.html', opt=opt), 200
         else:
-            return flask.redirect(flask.url_for('admin', lang=_('en'))), 302
+            return flask.render_template('login.html', opt=opt), 200
     except Exception as ex:
         traceback.print_exc()
+        return flask.render_template('login_fail.html', opt=opt), 200
 
-@app.route('/<lang>/admin/', methods=['GET', 'POST'])
+@app.route('/<lang>/admin/')
 @flask_login.login_required
 def admin():
     "Gives the administrator a page with forms to modify the database."
-    return flask.render_template('adminform.html',
-        opt=opt, data=database.get_reserves()), 200
+    try:
+        return flask.render_template('adminform.html',
+            opt=opt, data=database.get_reserves()), 200
+    except Exception as ex:
+        traceback.print_exc()
+        return flask.redirect(flask.url_for('view_reserves', lang=_('en'))), 302
 
 @app.route('/<lang>/add/', methods=['POST'])
 @flask_login.login_required
