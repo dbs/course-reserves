@@ -90,6 +90,20 @@ def pre_request():
             flask.request.view_args.pop('lang')
         else:
             return flask.abort(404)
+    try:
+        if 'uid' not in flask.session:
+            flask_login.logout_user()
+            return
+        user = User.get_by_id(flask.session['uid'])
+        if user is None:
+            flask_login.logout_user()
+        else:
+            flask_login.current_user = user
+    except Exception as ex:
+        if opt['VERBOSE']:
+            print('Exception occurred on user:')
+            traceback.print_exc()
+        flask_login.logout_user()
 
 @babel.localeselector
 def select_locale():
@@ -102,20 +116,6 @@ def select_locale():
 @login_manager.user_loader
 def load_user(id):
     return User.get_by_id(id)
-
-@app.before_request
-def pre_request():
-    "Selects a user based on the session's UID"
-    try:
-        user = User.get_by_id(session['uid'])
-        if not user:
-            logout_user()
-        else:
-            current_user = user
-    except Exception, ex:
-        if opt['VERBOSE']:
-            print('Exception occurred on user:')
-            print(ex)
 
 @app.errorhandler(401)
 def forbidden_error(err):
