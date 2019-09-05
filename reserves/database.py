@@ -43,7 +43,7 @@ def add_reserve(code, instructor, bookbag):
     cur = dbh.cursor()
     try:
         cur.execute("""INSERT INTO reserve VALUES (%s, %s, %s, %s)""", 
-                    (os.urandom(24).encode('hex'),
+                    (os.urandom(24).hex(),
                     code, instructor, bookbag))
     except Exception as ex:
         if opt['VERBOSE']:
