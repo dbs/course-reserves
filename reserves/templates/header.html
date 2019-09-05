@@ -3,8 +3,8 @@
   <head>
   <title>{{ _('Reserves List') }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script type="text/javascript" src="/static/list.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'list.js') }}"></script>
   </head>
   <body class="container">
     <div class="header">
