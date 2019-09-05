@@ -22,8 +22,30 @@ You can install the prerequisites using +pipenv+:
 
 == Installation
 
-As long as the requirements are met, this *should* work with very little effort. You'll need your usual WSGI stuff to get it working on a web server. This application was developed on an nginx server, so that's where one will get the best results.
+As long as the requirements are met, this *should* work with very little effort.
 
-+schema.sql+ has all of the SQL code to generate the tables that are needed. +config.ini+ stores the username and database used, so one need simply change those to whatever is desired.
++schema.sql+ has all of the SQL code to generate the tables that are needed. +config.ini+ stores the username and database used.
 
 Speaking of +config.ini+, a secret key must be set in there. This is a key used to sign session variables/cookies. Try not to make it public.
+
+== Configuration
+
+An example nginx server block, if you set the port to 8888, might look like the following:
+
+    rewrite ^/reserves/?$ /reserves/en/ redirect;
+
+    location /reserves/ {
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_headers_hash_max_size 2048;
+
+        proxy_pass http://127.0.0.1:8888/;
+        proxy_redirect     ~http://127.0.0.1:8888/(.*)$ http://127.0.0.1/reserves/$1;
+    }
+
+Note that on SELinux-enabled systems like Fedora, you will likely need to allow web servers to connect to HTTP:
+
+    setsebool -P httpd_can_network_connect 1
