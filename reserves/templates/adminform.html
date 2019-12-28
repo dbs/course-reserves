@@ -49,10 +49,16 @@
               <td class="code" onclick="
                   document.getElementsByName('reserve_id')[0].value = '{{ reserve[3] }}';
                   document.getElementsByName('reserve_id')[1].value = '{{ reserve[3] }}';
+                  document.getElementsByName('course_code')[1].value = '{{ reserve[0] }}';
+                  document.getElementsByName('instructor')[1].value = '{{ reserve[1] }}';
+                  document.getElementsByName('bookbag_id')[1].value = '{{ reserve[2] }}';
               ">{{ reserve[0] }}</td>
               <td class="instructor" onclick="
                   document.getElementsByName('reserve_id')[0].value = '{{ reserve[3] }}';
                   document.getElementsByName('reserve_id')[1].value = '{{ reserve[3] }}';
+                  document.getElementsByName('course_code')[1].value = '{{ reserve[0] }}';
+                  document.getElementsByName('instructor')[1].value = '{{ reserve[1] }}';
+                  document.getElementsByName('bookbag_id')[1].value = '{{ reserve[2] }}';
               ">{{ reserve[1] }}</td>
             </tr>
             {% endfor %}
