@@ -148,8 +148,9 @@ def server_problem(err):
 def view_reserves():
     "Our root page - show the list of reserves to the user."
     logout_user()
-    return render_template('root.html',
-            data=database.get_reserves(), opt=opt), 200
+    data = database.get_reserves()
+    data = filter(lambda i: i[0] != "" and i[1] != "" and i[2] != "" , data)
+    return render_template('root.html', data=data, opt=opt), 200
 
 @app.route('/<lang>/login/', methods=['GET', 'POST'])
 def login_form():
